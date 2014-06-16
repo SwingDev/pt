@@ -4,29 +4,37 @@ Minimal client to use Pivotal Tracker from the console.
 
 ## Setup
 
-`rake install`
+Run `sudo install.sh`. This will create symlink to `/usr/local/sbin/pt`, so that you have `pt` in your $PATH. 
 
 The first time you run it, `pt` will ask you some data about your Pivotal Tracker account API key. 
 
-### Files
+Run it from inside your project directory and it will ask you to pick project from PT corresponding with your work. It will save project id inside your project directory in `.pt` file, so that `pt` will refer to this project every time you will run it from inside project's directory. 
+
 File with you username and API key will go to `~/.pt`. 
-Inside your workspace create a `.ptproject` file with project id inside it, so that all `pt` commands issued in this directory will regard your particular project. 
 
 ## Usage
 
 Run `pt` from the root folder of your project.
 
-- **pt** - show all available tasks
-- **pt todo** - show all your not finished tasks
-- **pt started <user initials>** - show (all|users) started stories
+- `pt` - show all available tasks
+- `pt todo` - show all your not finished tasks
+- `pt started [user]` - show (all|user's) started stories
+- `pt show [id]` - shows detailed info about a task
+- `pt list [user|all]` - list tasks for user or all task
+- `pt updates [number]` - shows number recent activity from your current project
+- `pt open [id]` - open a task in the browser
+- `pt start [id]` - mark a task as started
+
+
+
+## Not tested commands
+
+**They can be fixed and prepared if believed to be useful.**
 
 pt create    [title] <owner> <type> -m     # create a new task (and include description ala git commit)
 
-pt show      [id]                          # shows detailed info about a task
 
 pt tasks     [id]                          # manage tasks of story
-
-pt open      [id]                          # open a task in the browser
 
 pt assign    [id] <owner>                  # assign owner
 
@@ -36,7 +44,6 @@ pt label     [id] [label]                  # add a label
 
 pt estimate  [id] [0-3]                    # estimate a task in points scale
 
-pt start     [id]                          # mark a task as started
 
 pt finish    [id]                          # indicate you've finished a task
 
@@ -49,10 +56,6 @@ pt reject    [id] [reason]                 # mark a task as rejected, explaining
 pt done      [id]  <0-3> <comment>         # lazy mans finish task, opens, assigns to you, estimates, finish & delivers
 
 pt find      [query]                       # looks in your tasks by title and presents it
-
-pt list      [owner]                       # list all tasks for another pt user
-
-pt list      all                           # list all tasks for all users
 
 pt updates   [number]                      # shows number recent activity from your current project
 

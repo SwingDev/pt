@@ -155,9 +155,7 @@ class PT::UI
 
   def open
     if @params[0]
-      tasks = @client.get_my_work(@project, @local_config[:user_name])
-      table = PT::TasksTable.new(tasks)
-      task = table[ @params[0].to_i ]
+      task = task_by_id_or_pt_id @params[0].to_i
       congrats("Opening #{task.name}")
     else
       tasks = @client.get_my_open_tasks(@project, @local_config[:user_name])
@@ -296,7 +294,7 @@ class PT::UI
   end
 
   def show
-    title("Tasks for #{user_s} in #{project_to_s}")
+    title("All tasks in #{project_to_s}") unless @params[0]
     task = get_task_from_params "Please select a story to show"
     unless task
       message("No matches found for '#{@params[0]}', please use a valid pivotal story Id")
@@ -469,7 +467,7 @@ class PT::UI
 
   def updates
     activities = @client.get_activities(@project, @params[0])
-    tasks = @client.get_my_work(@project, @local_config[:user_name])
+    tasks = @client.get_work(@project)
     title("Recent Activity on #{project_to_s}")
     activities.each do |activity|
       show_activity(activity, tasks)
@@ -483,30 +481,31 @@ class PT::UI
     end
 
     title("Command line usage for pt #{PT::VERSION}")
-    puts("pt                                         # show all available tasks")
-    puts("pt todo      <owner>                       # show all unscheduled tasks")
-    puts("pt started   <owner>                       # show all started stories")
-    puts("pt create    [title] <owner> <type> -m     # create a new task (and include description ala git commit)")
-    puts("pt show      [id]                          # shows detailed info about a task")
-    puts("pt tasks     [id]                          # manage tasks of story")
-    puts("pt open      [id]                          # open a task in the browser")
-    puts("pt assign    [id] <owner>                  # assign owner")
-    puts("pt comment   [id] [comment]                # add a comment")
-    puts("pt label     [id] [label]                  # add a label")
-    puts("pt estimate  [id] [0-3]                    # estimate a task in points scale")
-    puts("pt start     [id]                          # mark a task as started")
-    puts("pt finish    [id]                          # indicate you've finished a task")
-    puts("pt deliver   [id]                          # indicate the task is delivered");
-    puts("pt accept    [id]                          # mark a task as accepted")
-    puts("pt reject    [id] [reason]                 # mark a task as rejected, explaining why")
-    puts("pt done      [id]  <0-3> <comment>         # lazy mans finish task, opens, assigns to you, estimates, finish & delivers")
-    puts("pt find      [query]                       # looks in your tasks by title and presents it")
-    puts("pt list      [owner] or all                # list all tasks for another pt user")
-    puts("pt updates   [number]                      # shows number recent activity from your current project")
-    puts("pt recent                                  # shows stories you've recently shown or commented on with pt")
-    puts("")
-    puts("All commands can be run entirely without arguments for a wizard based UI. Otherwise [required] <optional>.")
-    puts("Anything that takes an id will also take the num (index) from the pt command.")
+    puts("Refer to README.md to learn about commands.")
+    # puts("pt                                         # show all available tasks")
+    # puts("pt todo      <owner>                       # show all unscheduled tasks")
+    # puts("pt started   <owner>                       # show all started stories")
+    # puts("pt create    [title] <owner> <type> -m     # create a new task (and include description ala git commit)")
+    # puts("pt show      [id]                          # shows detailed info about a task")
+    # puts("pt tasks     [id]                          # manage tasks of story")
+    # puts("pt open      [id]                          # open a task in the browser")
+    # puts("pt assign    [id] <owner>                  # assign owner")
+    # puts("pt comment   [id] [comment]                # add a comment")
+    # puts("pt label     [id] [label]                  # add a label")
+    # puts("pt estimate  [id] [0-3]                    # estimate a task in points scale")
+    # puts("pt start     [id]                          # mark a task as started")
+    # puts("pt finish    [id]                          # indicate you've finished a task")
+    # puts("pt deliver   [id]                          # indicate the task is delivered");
+    # puts("pt accept    [id]                          # mark a task as accepted")
+    # puts("pt reject    [id] [reason]                 # mark a task as rejected, explaining why")
+    # puts("pt done      [id]  <0-3> <comment>         # lazy mans finish task, opens, assigns to you, estimates, finish & delivers")
+    # puts("pt find      [query]                       # looks in your tasks by title and presents it")
+    # puts("pt list      [owner] or all                # list all tasks for another pt user")
+    # puts("pt updates   [number]                      # shows number recent activity from your current project")
+    # puts("pt recent                                  # shows stories you've recently shown or commented on with pt")
+    # puts("")
+    # puts("All commands can be run entirely without arguments for a wizard based UI. Otherwise [required] <optional>.")
+    # puts("Anything that takes an id will also take the num (index) from the pt command.")
   end
 
   protected
@@ -752,7 +751,7 @@ class PT::UI
         task_id = tasks.index(story)
       end
     end
-    message("#{activity.description} [#{task_id}]")
+    message("#{activity.occurred_at} - #{activity.description} [#{task_id}]")
   end
 
   def get_open_story_task_from_params(task)
@@ -772,7 +771,7 @@ class PT::UI
     if @params[0]
       task = task_by_id_or_pt_id(@params[0].to_i)
     else
-      tasks = @client.get_my_work(@project, @local_config[:user_name])
+      tasks = @client.get_work(@project)
       table = PT::TasksTable.new(tasks)
       task = select(prompt, table)
     end
