@@ -5,10 +5,10 @@ require 'pt'
 Gem::Specification.new do |s|
   s.name              = "pt"
   s.version           = PT::VERSION
-  s.authors           = ["Raul Murciano", "Orta Therox", "Engineering at Causes"]
-  s.email             = ["raul@murciano.net", "orta.therox@gmail.com", "eng@causes.com"]
+  s.authors           = ["Raul Murciano", "Orta Therox", "Engineering at Causes", "Marcin Mincer"]
+  s.email             = ["raul@murciano.net", "orta.therox@gmail.com", "eng@causes.com", "marcin@swingdev.io"]
   s.homepage          = "http://www.github.com/raul/pt"
-  s.summary           = "Client to use Pivotal Tracker from the console."
+  s.summary           = "Client to use Pivotal Tracker from the console. Few modifications for swingdev.io flow."
   s.description       = "Minimalist, opinionated client to manage your Pivotal Tracker tasks from the command line."
   s.executables       = ["pt"]
   s.files             = Dir["{lib}/**/*", "[A-Z]*", "init.rb"] - ["Gemfile.lock"]

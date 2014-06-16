@@ -4,9 +4,13 @@ Minimal client to use Pivotal Tracker from the console.
 
 ## Setup
 
-    gem install pt
+`rake install`
 
-The first time you run it, `pt` will ask you some data about your Pivotal Tracker account and your current project.
+The first time you run it, `pt` will ask you some data about your Pivotal Tracker account API key. 
+
+### Files
+File with you username and API key will go to `~/.pt`. 
+Inside your workspace create a `.ptproject` file with project id inside it, so that all `pt` commands issued in this directory will regard your particular project. 
 
 ## Usage
 
