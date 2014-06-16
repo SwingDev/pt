@@ -55,7 +55,7 @@ module PT
   class TasksTable < DataTable
 
     def self.fields
-      [:name, :state, :id]
+      [:id, :name, :state, :owned_by, :labels, :estimate]
     end
 
   end
