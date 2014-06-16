@@ -3,6 +3,8 @@
 Minimal client to use Pivotal Tracker from the console.
 
 ## Setup
+If using Ruby 2.0.0 - ensure your Ruby version is >= `ruby-2.0.0-p451`. If not, run `rvm install ruby-2.0.0-p451`.
+
 Run `bundle` to install gem dependencies.
 
 Run `./install.sh`. This will create symlink to `/usr/local/sbin/pt`, so that you have `pt` in your $PATH.
