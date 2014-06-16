@@ -16,52 +16,50 @@ Inside your workspace create a `.ptproject` file with project id inside it, so t
 
 Run `pt` from the root folder of your project.
 
-  pt                                         # show all available tasks
+- **pt** - show all available tasks
+- **pt todo** - show all your not finished tasks
+- **pt started <user initials>** - show (all|users) started stories
 
-  pt todo      <owner>                       # show all unscheduled tasks
+pt create    [title] <owner> <type> -m     # create a new task (and include description ala git commit)
 
-  pt started   <owner>                       # show all started stories
+pt show      [id]                          # shows detailed info about a task
 
-  pt create    [title] <owner> <type> -m     # create a new task (and include description ala git commit)
+pt tasks     [id]                          # manage tasks of story
 
-  pt show      [id]                          # shows detailed info about a task
+pt open      [id]                          # open a task in the browser
 
-  pt tasks     [id]                          # manage tasks of story
+pt assign    [id] <owner>                  # assign owner
 
-  pt open      [id]                          # open a task in the browser
+pt comment   [id] [comment]                # add a comment
 
-  pt assign    [id] <owner>                  # assign owner
+pt label     [id] [label]                  # add a label
 
-  pt comment   [id] [comment]                # add a comment
+pt estimate  [id] [0-3]                    # estimate a task in points scale
 
-  pt label     [id] [label]                  # add a label
+pt start     [id]                          # mark a task as started
 
-  pt estimate  [id] [0-3]                    # estimate a task in points scale
+pt finish    [id]                          # indicate you've finished a task
 
-  pt start     [id]                          # mark a task as started
+pt deliver   [id]                          # indicate the task is delivered
 
-  pt finish    [id]                          # indicate you've finished a task
+pt accept    [id]                          # mark a task as accepted
 
-  pt deliver   [id]                          # indicate the task is delivered
+pt reject    [id] [reason]                 # mark a task as rejected, explaining why
 
-  pt accept    [id]                          # mark a task as accepted
+pt done      [id]  <0-3> <comment>         # lazy mans finish task, opens, assigns to you, estimates, finish & delivers
 
-  pt reject    [id] [reason]                 # mark a task as rejected, explaining why
+pt find      [query]                       # looks in your tasks by title and presents it
 
-  pt done      [id]  <0-3> <comment>         # lazy mans finish task, opens, assigns to you, estimates, finish & delivers
+pt list      [owner]                       # list all tasks for another pt user
 
-  pt find      [query]                       # looks in your tasks by title and presents it
+pt list      all                           # list all tasks for all users
 
-  pt list      [owner]                       # list all tasks for another pt user
+pt updates   [number]                      # shows number recent activity from your current project
 
-  pt list      all                           # list all tasks for all users
+pt recent                                  # shows stories you've recently shown or commented on with pt
 
-  pt updates   [number]                      # shows number recent activity from your current project
-
-  pt recent                                  # shows stories you've recently shown or commented on with pt
-
-  All commands can be run entirely without arguments for a wizard based UI. Otherwise [required] <optional>.
-  Anything that takes an id will also take the num (index) from the pt command.
+All commands can be run entirely without arguments for a wizard based UI. Otherwise [required] <optional>.
+Anything that takes an id will also take the num (index) from the pt command.
 
 ## Problems?
 

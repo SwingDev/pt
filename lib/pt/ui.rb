@@ -32,9 +32,9 @@ class PT::UI
   end
 
   def todo
-    title("My Work for #{user_s} in #{project_to_s}")
+    title("Todo for #{user_s} in #{project_to_s}")
     stories = @client.get_my_work(@project, @local_config[:user_name])
-    stories = stories.select { |story| story.current_state == "unscheduled" }
+    stories = stories.select { |story| story.current_state != "finished" and story.current_state != "delivered"}
     PT::TasksTable.new(stories).print @global_config
   end
 
