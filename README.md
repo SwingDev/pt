@@ -3,8 +3,9 @@
 Minimal client to use Pivotal Tracker from the console.
 
 ## Setup
+Run `bundle` to install gem dependencies.
 
-Run `sudo install.sh`. This will create symlink to `/usr/local/sbin/pt`, so that you have `pt` in your $PATH. 
+Run `./install.sh`. This will create symlink to `/usr/local/sbin/pt`, so that you have `pt` in your $PATH.
 
 The first time you run it, `pt` will ask you some data about your Pivotal Tracker account API key. 
 
