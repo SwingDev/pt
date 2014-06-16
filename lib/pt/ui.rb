@@ -1,6 +1,6 @@
 require 'yaml'
 require 'colored'
-require 'highline'
+require 'highline/import'
 require 'tempfile'
 
 class PT::UI
@@ -10,7 +10,7 @@ class PT::UI
 
   def initialize(args)
     require 'pt/debugger' if ARGV.delete('--debug')
-    @io = HighLine.new
+    # @io = HighLine.new
     @global_config = load_global_config
     @client = PT::Client.new(@global_config[:api_number])
     @local_config = load_local_config
@@ -527,13 +527,8 @@ class PT::UI
     if config.empty?
       message "I can't find info about your Pivotal Tracker account in #{GLOBAL_CONFIG_PATH}."
       while !config[:api_number] do
-        config[:email] = ask "What is your email?"
-        password = ask_secret "And your password? (won't be displayed on screen)"
-        begin
-          config[:api_number] = PT::Client.get_api_token(config[:email], password)
-        rescue PT::InputError => e
-          error e.message + " Please try again."
-        end
+        config[:email] = ask("What is your email that you use for Pivotal Tracker?").to_s
+        config[:api_number] = ask("PivotalTracker API token (you can find it at the bottom of https://www.pivotaltracker.com/profile):").to_s
       end
       congrats "Thanks!",
                "Your API id is " + config[:api_number],
