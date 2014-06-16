@@ -24,6 +24,8 @@ Run `pt` from the root folder of your project.
 - `pt updates [number]` - shows number recent activity from your current project
 - `pt open [id]` - open a task in the browser
 - `pt start [id]` - mark a task as started
+- `pt finish [id]` - indicate you've finished a task
+- `pt deliver [id]` - indicate the task is delivered
 
 
 
@@ -45,9 +47,7 @@ pt label     [id] [label]                  # add a label
 pt estimate  [id] [0-3]                    # estimate a task in points scale
 
 
-pt finish    [id]                          # indicate you've finished a task
 
-pt deliver   [id]                          # indicate the task is delivered
 
 pt accept    [id]                          # mark a task as accepted
 
