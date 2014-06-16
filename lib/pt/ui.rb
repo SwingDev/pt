@@ -15,8 +15,13 @@ class PT::UI
     @client = PT::Client.new(@global_config[:api_number])
     @local_config = load_local_config
     @project = @client.get_project(@local_config[:project_id])
-    command = args[0].to_sym rescue :my_work
     @params = args[1..-1]
+    begin
+      command = args[0].to_sym
+    rescue
+      @params = ["all"]
+      command = :list
+    end
     commands.include?(command.to_sym) ? send(command.to_sym) : help
   end
 
