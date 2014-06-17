@@ -9,11 +9,23 @@ Run `bundle install` to install gem dependencies.
 
 Run `./install.sh`. This will create symlink to `/usr/local/sbin/pt`, so that you have `pt` in your $PATH.
 
-The first time you run it, `pt` will ask you some data about your Pivotal Tracker account API key. 
+The first time you run it, `pt` will ask you some data about your Pivotal Tracker account API key.
 
-Run it from inside your project directory and it will ask you to pick project from PT corresponding with your work. It will save project id inside your project directory in `.pt` file, so that `pt` will refer to this project every time you will run it from inside project's directory. 
+Run it from inside your project directory and it will ask you to pick project from PT corresponding with your work. It will save project id inside your project directory in `.pt` file, so that `pt` will refer to this project every time you will run it from inside project's directory.
 
-File with you username and API key will go to `~/.pt`. 
+File with you username and API key will go to `~/.pt`.
+
+## Install ZSH completion plugin
+
+Copy / link `completions/_pt` to your completions dir.
+
+If using Oh My ZSH:
+
+	cp ./completions/_pt ~/.oh-my-zsh/completions/_pt
+
+Run:
+
+	compinit;unfunction _pt;autoload _pt
 
 ## Usage
 

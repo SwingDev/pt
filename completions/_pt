@@ -1,0 +1,93 @@
+#compdef pt
+#autoload
+
+# -----------------------------------------------------------------------------
+#          FILE:  _pt
+#   DESCRIPTION:  pt autocomplete plugin
+#                 https://github.com/SwingDev/pt
+#        AUTHOR:  Tomek Kopczuk (tkopczuk@gmail.com)
+#        GITHUB:  https://github.com/tkopczuk
+#       TWITTER:  @tkopczuk
+#       VERSION:  0.0.1
+#       LICENSE:  MIT
+# -----------------------------------------------------------------------------
+
+local -a _1st_arguments
+_1st_arguments=(
+    'todo:show all your not finished tasks'
+    'show:shows detailed info about a task'
+    'list:list tasks for user or all task'
+    'updates:shows number recent activity from your current project'
+    'open:open a task in the browser'
+    'start:mark a task as started'
+    'finish:indicate you''ve finished a task'
+    'deliver:indicate the task is delivered'
+)
+
+get_results_for_state () {
+  pt | grep '╎' | sed 's/╎/|/g' | sed 's/[[:space:]]*|[[:space:]]*/|/g' | grep "$1|"
+}
+
+add_completions_for_state () {
+    local result ids explanations
+
+    result=$(get_results_for_state $1)
+    ids=("${(@f)$(echo $result | awk -F'|' '{print $2}')}")
+    explanations=("${(@f)$(echo $result  | awk -F'|' '{print $3}')}")
+
+    compadd -l -d explanations -- $ids
+}
+
+
+__all_list() {
+  add_completions_for_state
+}
+__unstarted_list() {
+  add_completions_for_state unstarted
+}
+__started_list() {
+  add_completions_for_state started
+}
+__finished_list() {
+  add_completions_for_state finished
+}
+
+
+local curcontext="$curcontext" state line
+typeset -A opt_args
+
+_arguments -C \
+    $_inherited_options \
+    ':command:->command' \
+    '*::options:->options'
+
+case $state in
+  (command)
+      _describe -t commands "pt" _1st_arguments
+      return
+  ;;
+
+  (options)
+    case $line[1] in
+        (open)
+            _arguments \
+                ':feature:__all_list'
+        ;;
+        (show)
+            _arguments \
+                ':feature:__all_list'
+        ;;
+        (start)
+            _arguments \
+                ':feature:__unstarted_list'
+        ;;
+        (finish)
+            _arguments \
+                ':feature:__started_list'
+        ;;
+        (deliver)
+            _arguments \
+                ':feature:__finished_list'
+        ;;
+    esac
+esac
