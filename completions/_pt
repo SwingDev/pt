@@ -25,7 +25,11 @@ _1st_arguments=(
 )
 
 get_results_for_state () {
-  pt | grep '╎' | sed 's/╎/|/g' | sed 's/[[:space:]]*|[[:space:]]*/|/g' | grep "$1|"
+  if [ $# -eq 1 ]; then
+    pt | grep '╎' | sed 's/╎/|/g' | sed 's/[[:space:]]*|[[:space:]]*/|/g' | grep "|$1|"
+  else
+    pt | grep '╎' | sed 's/╎/|/g' | sed 's/[[:space:]]*|[[:space:]]*/|/g'
+  fi
 }
 
 add_completions_for_state () {
